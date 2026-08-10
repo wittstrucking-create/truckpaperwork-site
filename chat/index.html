@@ -29,13 +29,29 @@
     .price strong { color: var(--accent); }
     .alt { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
     ul { line-height: 1.7; color: var(--muted); padding-left: 1.15rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.5rem; align-items: center; }
     .cta {
-      display: inline-block; margin-top: 1.5rem; padding: 0.9rem 1.35rem;
+      display: inline-block; padding: 0.9rem 1.35rem;
       background: var(--cta); color: #061018; text-decoration: none; font-weight: 700; border-radius: 3px;
     }
-    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-left: 0.5rem; }
+    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .cta.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+    .packs {
+      margin: 2rem 0 0; display: grid; gap: 0.75rem;
+    }
+    .pack {
+      border: 1px solid var(--line); padding: 1rem 1.1rem; border-radius: 2px;
+      background: rgba(0,0,0,0.22);
+    }
+    .pack strong { display: block; color: var(--ink); margin-bottom: 0.25rem; }
+    .pack span { color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
+    .pack .buy {
+      display: inline-block; margin-top: 0.7rem; color: var(--cta); font-weight: 600; text-decoration: none;
+    }
     .note { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
     a.back { color: var(--muted); font-size: 0.9rem; }
+    .path { margin-top: 1.25rem; font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+    .path a { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -51,9 +67,34 @@
       <li>Lead to your phone/email — you close, bot qualifies</li>
       <li>Local owner stack (Dimock Iron Works)</li>
     </ul>
-    <a class="cta" href="#demo">Try the live demo →</a>
-    <a class="cta secondary" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request setup</a>
-    <p class="note" id="demo">Live demo widget (bottom-right): Mitchell contractor after-hours lead bot. Ask it to take a job. Stripe Payment Links next.</p>
+
+    <div class="cta-row">
+      <a class="cta" href="#demo">Try the live demo →</a>
+      <a class="cta secondary" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20%E2%80%94%20start%20setup&body=Business%20name%3A%0ATrade%20(HVAC%2Fplumbing%2Froofing%2Fconcrete%2Fother)%3A%0AService%20area%20(cities%2Fzip)%3A%0APhone%20for%20lead%20alerts%3A%0APreferred%20plan%3A%20%24149%2B%24499%2Fmo%20%2F%20%244%2C990%2Fyr%0A%0AAnything%20the%20bot%20must%20know%20about%20your%20jobs%3A%0A">Start setup (email)</a>
+      <a class="cta ghost" href="#buy">Buy options</a>
+    </div>
+
+    <div class="packs" id="buy">
+      <div class="pack">
+        <strong>Setup — $149 one-time</strong>
+        <span>Widget install, niche template, services/FAQ load, lead routing to your phone/email.</span>
+        <a class="buy" href="mailto:hello@truckpaperwork.com?subject=Pay%20%24149%20setup%20%E2%80%94%20contractor%20chatbot&body=I%20want%20the%20%24149%20setup.%20Business%20name%3A%0APhone%3A%0A">Request invoice →</a>
+      </div>
+      <div class="pack">
+        <strong>Monthly — $499/mo</strong>
+        <span>Hosted agent, after-hours capture, lead alerts. Cancel anytime.</span>
+        <a class="buy" href="mailto:hello@truckpaperwork.com?subject=Pay%20%24499%2Fmo%20%E2%80%94%20contractor%20chatbot&body=I%20want%20the%20%24499%2Fmo%20plan.%20Business%20name%3A%0APhone%3A%0A">Request invoice →</a>
+      </div>
+      <div class="pack">
+        <strong>Annual — $4,990/yr</strong>
+        <span>~2 months free vs monthly. Same stack, prepaid.</span>
+        <a class="buy" href="mailto:hello@truckpaperwork.com?subject=Pay%20%244%2C990%2Fyr%20%E2%80%94%20contractor%20chatbot&body=I%20want%20the%20%244%2C990%2Fyr%20plan.%20Business%20name%3A%0APhone%3A%0A">Request invoice →</a>
+      </div>
+    </div>
+
+    <p class="path">Self-serve Stripe Payment Links go live here when payouts unlock. Until then: demo → email intake → invoice. <a href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">hello@truckpaperwork.com</a></p>
+
+    <p class="note" id="demo">Live demo widget (bottom-right): Mitchell contractor after-hours lead bot. Ask it to take a job.</p>
     <p class="note"><a class="back" href="../">← Fleet Business School hub</a></p>
   </div>
   <div style="width:0;height:0" id="VG_OVERLAY_CONTAINER"></div>
