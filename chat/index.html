@@ -62,6 +62,7 @@
     </ul>
     <div class="cta-row">
       <a class="cta" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request demo</a>
+      <a class="cta secondary" href="#live-demo" id="try-demo">Try live demo</a>
       <a class="cta secondary" id="stripe-setup" href="#stripe-pending">Pay $149 setup</a>
       <a class="cta ghost" href="../">Fleet tools</a>
     </div>
@@ -77,7 +78,7 @@
         <a id="stripe-annual" href="#stripe-pending">Stripe link (pending bank verify)</a>
       </div>
     </div>
-    <p class="note" id="stripe-pending">Stripe Payment Links placeholder: replace <code>#stripe-pending</code> IDs with live <code>buy.stripe.com/…</code> URLs once bank/ID clears. Demo email stays live now. ConvoCore = bot brain (contractor template #1).</p>
+    <p class="note" id="stripe-pending">Live ConvoCore trial widget below (Mitchell Contractor Lead Bot · agent <code>0EQZvrFEqDQDvw8Qc2JX</code>). Stripe Payment Links: swap <code>#stripe-pending</code> for <code>buy.stripe.com/…</code> after bank/ID. Demo email stays live.</p>
     <p class="note"><a class="back" href="../">← Fleet Business School hub</a></p>
   </div>
   <script>
@@ -98,6 +99,25 @@
         const el = document.getElementById(id);
         if (el && url) el.setAttribute("href", url);
       }
+    })();
+  </script>
+
+  <section id="live-demo" style="margin:2.5rem auto 0; max-width:720px; padding:0 1.25rem 3rem;">
+    <p style="font-family:IBM Plex Sans,system-ui,sans-serif;color:#8b9aab;font-size:0.9rem;margin:0 0 0.75rem;">Live demo — after-hours contractor lead capture (ConvoCore free trial)</p>
+  </section>
+  <div style="width:0;height:0;" id="VG_OVERLAY_CONTAINER"></div>
+  <script defer>
+    (function() {
+      window.VG_CONFIG = {
+        ID: "0EQZvrFEqDQDvw8Qc2JX",
+        region: "na",
+        render: "bottom-right",
+        stylesheets: ["https://cdn.convocore.ai/vg_live_build/styles.css"]
+      };
+      var s = document.createElement("script");
+      s.src = "https://cdn.convocore.ai/vg_live_build/vg_bundle.js";
+      s.defer = true;
+      document.body.appendChild(s);
     })();
   </script>
 </body>
