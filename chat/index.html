@@ -29,11 +29,20 @@
     .price strong { color: var(--accent); }
     .alt { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
     ul { line-height: 1.7; color: var(--muted); padding-left: 1.15rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; align-items: center; }
     .cta {
-      display: inline-block; margin-top: 1.5rem; padding: 0.9rem 1.35rem;
+      display: inline-block; padding: 0.9rem 1.35rem;
       background: var(--cta); color: #061018; text-decoration: none; font-weight: 700; border-radius: 3px;
     }
-    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-left: 0.5rem; }
+    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .cta.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
+    .plans { margin-top: 2rem; display: grid; gap: 0.75rem; }
+    .plan {
+      border: 1px solid var(--line); padding: 1rem 1.1rem; background: rgba(0,0,0,0.22);
+    }
+    .plan strong { display: block; margin-bottom: 0.25rem; }
+    .plan span { color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+    .plan a { color: var(--cta); font-weight: 600; font-size: 0.92rem; }
     .note { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
     a.back { color: var(--muted); font-size: 0.9rem; }
   </style>
@@ -51,10 +60,45 @@
       <li>Lead to your phone/email — you close, bot qualifies</li>
       <li>Local owner stack (Dimock Iron Works)</li>
     </ul>
-    <a class="cta" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request demo</a>
-    <a class="cta secondary" href="../">Fleet tools</a>
-    <p class="note">Stripe Payment Links + Loom demo wire next. ConvoCore trial for the brain. Niche lock: contractor first (Bob 2).</p>
+    <div class="cta-row">
+      <a class="cta" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request demo</a>
+      <a class="cta secondary" id="stripe-setup" href="#stripe-pending">Pay $149 setup</a>
+      <a class="cta ghost" href="../">Fleet tools</a>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <strong>Monthly — $499/mo</strong>
+        <span>After setup. Stripe Payment Link wires when account verifies.</span><br />
+        <a id="stripe-monthly" href="#stripe-pending">Stripe link (pending bank verify)</a>
+      </div>
+      <div class="plan">
+        <strong>Annual — $4,990/yr</strong>
+        <span>Prepaid alternate. Same product, one invoice.</span><br />
+        <a id="stripe-annual" href="#stripe-pending">Stripe link (pending bank verify)</a>
+      </div>
+    </div>
+    <p class="note" id="stripe-pending">Stripe Payment Links placeholder: replace <code>#stripe-pending</code> IDs with live <code>buy.stripe.com/…</code> URLs once bank/ID clears. Demo email stays live now. ConvoCore = bot brain (contractor template #1).</p>
     <p class="note"><a class="back" href="../">← Fleet Business School hub</a></p>
   </div>
+  <script>
+    // Swap these when Stripe Payment Links exist (no secrets in HTML).
+    window.STRIPE_LINKS = {
+      setup: null,    // e.g. "https://buy.stripe.com/..."
+      monthly: null,
+      annual: null
+    };
+    (function applyStripe() {
+      const map = [
+        ["stripe-setup", "setup"],
+        ["stripe-monthly", "monthly"],
+        ["stripe-annual", "annual"]
+      ];
+      for (const [id, key] of map) {
+        const url = window.STRIPE_LINKS[key];
+        const el = document.getElementById(id);
+        if (el && url) el.setAttribute("href", url);
+      }
+    })();
+  </script>
 </body>
 </html>
