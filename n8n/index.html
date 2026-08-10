@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>POD → Invoice Automation — TruckPaperwork / n8n</title>
-  <meta name="description" content="POD photo in → broker-ready invoice out the same day. $497 setup + $597/mo for 1–15 truck fleets." />
+  <title>POD → Invoice — $497 setup + $597/mo — TruckPaperwork</title>
+  <meta name="description" content="Driver snaps a POD → broker gets a clean invoice the same day. $497 setup + $597/mo for 1–5 truck / small broker ops. Mailto until Stripe clears." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
@@ -25,11 +25,17 @@
     .wrap { max-width: 720px; margin: 0 auto; padding: 2.75rem 1.25rem 4rem; }
     .brand { font-family: "Special Elite", cursive; font-size: 1.15rem; color: var(--accent); margin: 0 0 1.25rem; }
     h1 { font-size: clamp(2rem, 5vw, 2.7rem); line-height: 1.12; margin: 0 0 0.75rem; letter-spacing: -0.02em; }
-    .sub { color: var(--muted); font-size: 1.12rem; line-height: 1.5; margin: 0 0 1.5rem; max-width: 36em; }
-    .price { font-size: 1.35rem; margin: 0 0 0.35rem; }
-    .price strong { color: var(--accent); }
-    .alt { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
-    ul { line-height: 1.7; color: var(--muted); padding-left: 1.15rem; }
+    h2 { font-size: 1.1rem; margin: 1.75rem 0 0.65rem; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); font-size: 1.12rem; line-height: 1.5; margin: 0 0 1.25rem; max-width: 36em; }
+    .hero-price {
+      margin: 0 0 1.35rem; padding: 1rem 1.15rem;
+      border: 1px solid var(--line); border-radius: 2px;
+      background: rgba(0,0,0,0.28);
+    }
+    .hero-price .main { font-size: 1.45rem; margin: 0 0 0.3rem; line-height: 1.25; }
+    .hero-price .main strong { color: var(--accent); }
+    .hero-price .alt { color: var(--muted); font-size: 0.95rem; margin: 0; }
+    ul { line-height: 1.7; color: var(--muted); padding-left: 1.15rem; margin: 0; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.5rem; align-items: center; }
     .cta {
       display: inline-block; padding: 0.9rem 1.35rem;
@@ -37,41 +43,51 @@
     }
     .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
     .flow {
-      margin: 2rem 0 0; padding: 1.1rem 1.2rem; border: 1px solid var(--line);
+      margin: 1.75rem 0 0; padding: 1.1rem 1.2rem; border: 1px solid var(--line);
       background: rgba(0,0,0,0.22); border-radius: 2px; color: var(--muted); font-size: 0.95rem; line-height: 1.65;
       font-family: ui-monospace, "IBM Plex Mono", monospace;
     }
-    .packs { margin: 2rem 0 0; display: grid; gap: 0.75rem; }
+    .packs { margin: 1.75rem 0 0; display: grid; gap: 0.75rem; }
     .pack {
       border: 1px solid var(--line); padding: 1rem 1.1rem; border-radius: 2px;
       background: rgba(0,0,0,0.22);
     }
     .pack strong { display: block; color: var(--ink); margin-bottom: 0.25rem; }
     .pack span { color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
-    .note { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
-    a.back { color: var(--muted); font-size: 0.9rem; }
-    .who { margin-top: 1.75rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+    .pack .buy {
+      display: inline-block; margin-top: 0.7rem; color: var(--cta); font-weight: 600; text-decoration: none;
+    }
+    .who { margin-top: 0.35rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
     .who strong { color: var(--ink); }
+    .note { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; line-height: 1.55; }
+    a.back { color: var(--muted); font-size: 0.9rem; }
+    .path { margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+    .path a { color: var(--accent); }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <p class="brand">TruckPaperwork · n8n automation</p>
+    <p class="brand">TruckPaperwork · POD → Invoice</p>
     <h1>POD in → invoice out — same day</h1>
-    <p class="sub">n8n automation for small fleets: photo proof becomes a broker-ready PDF without the retype tax.</p>
-    <p class="price"><strong>$497 setup + $597/mo</strong></p>
-    <p class="alt">Kill switch if it’s not saving you a clerk-hour a week.</p>
+    <p class="sub">Your driver snaps a POD. You get a broker-ready PDF emailed without retyping the load. Built on n8n on your stack — not another SaaS login tax.</p>
 
+    <div class="hero-price">
+      <p class="main"><strong>$497 setup + $597/mo</strong></p>
+      <p class="alt">Kill it if it’s not saving you a clerk-hour a week. No fake “Buy now” — Stripe is still blocked; email works.</p>
+    </div>
+
+    <h2>What it does</h2>
     <ul>
-      <li>One sample POD to prove the path</li>
-      <li>Your invoice template, your remit-to</li>
-      <li>Email to broker + logged row every time</li>
-      <li>Built on your stack — not another $99/mo SaaS tax to start</li>
+      <li>Intake: POD photo/PDF lands in a mailbox or form (with load # / BOL ref)</li>
+      <li>Extract: OCR/parse shipper, consignee, date, pieces/weight if visible, reference #s</li>
+      <li>Invoice: PDF from <em>your</em> template — logo, terms, remit-to</li>
+      <li>Send: email the broker/shipper, CC you</li>
+      <li>Log: one spreadsheet/Airtable/n8n row per load so you can prove what went out</li>
     </ul>
 
     <div class="cta-row">
-      <a class="cta" href="mailto:john@wittstrucking.com?subject=POD%20to%20Invoice%20demo&body=Fleet%20size%3A%0AWhere%20PODs%20live%20today%20(email%2Ftext%2Fapp)%3A%0A">Request POD→Invoice demo</a>
-      <a class="cta secondary" href="mailto:john@wittstrucking.com?subject=POD%E2%86%92Invoice%20setup%20%E2%80%94%20%24497%20%2B%20%24597%2Fmo&body=Fleet%20size%3A%0AWhere%20PODs%20live%20today%3A%0AInvoice%20template%20ready%20(Y%2FN)%3A%0A">Start setup (email)</a>
+      <a class="cta" href="mailto:john@wittstrucking.com?subject=POD%20to%20Invoice%20demo&body=Fleet%20size%20(trucks)%3A%0AWhere%20PODs%20live%20today%20(email%2Ftext%2Fapp)%3A%0ABroker%20email%20you%20invoice%20to%3A%0A%0A(Attach%20one%20sample%20POD%20%E2%80%94%20blur%20sensitive%20bits.)%0A">Request demo (email a sample POD)</a>
+      <a class="cta secondary" href="mailto:john@wittstrucking.com?subject=POD%E2%86%92Invoice%20setup%20%E2%80%94%20%24497%20%2B%20%24597%2Fmo&body=Fleet%20size%3A%0AWhere%20PODs%20live%20today%3A%0AInvoice%20template%20ready%20(Y%2FN)%3A%0ARemit-to%20%2F%20legal%20name%3A%0A">Start setup (email)</a>
     </div>
 
     <div class="flow">
@@ -83,22 +99,27 @@
       → email broker + log row
     </div>
 
+    <h2>Who it’s for</h2>
+    <p class="who"><strong>For:</strong> 1–5 truck fleets, owner-ops, and small broker-side desks that invoice weekly and are drowning in photo PODs sitting in texts/email.<br>
+    <strong>Not for:</strong> enterprises needing EDI/TMS deep integrate, or fleets with zero digital POD habit yet (fix the habit first).</p>
+
     <div class="packs">
       <div class="pack">
         <strong>Setup — $497 one-time</strong>
-        <span>Template + mailbox + first PDF path. Intake via email or form: POD image/PDF + load # / BOL ref.</span>
+        <span>Your invoice template + mailbox + first PDF path. One sample POD to prove the wire before retainer.</span>
+        <a class="buy" href="mailto:john@wittstrucking.com?subject=Invoice%20%24497%20setup%20%E2%80%94%20POD%20to%20Invoice&body=I%20want%20an%20invoice%20for%20the%20%24497%20setup.%0AFleet%20%2F%20company%3A%0APhone%3A%0A">Request $497 invoice →</a>
       </div>
       <div class="pack">
         <strong>Retainer — $597/mo</strong>
-        <span>Extract, invoice PDF, broker email, audit log row. FAQ tune in week 1; Slack/email for break/fix. Not included: custom TMS plugins, multi-entity accounting sync, legal review of terms.</span>
+        <span>Extract, invoice PDF, broker email, audit log. Week-1 FAQ tune; Slack/email for break/fix. Not included: custom TMS plugins, multi-entity accounting sync, legal review of invoice terms.</span>
+        <a class="buy" href="mailto:john@wittstrucking.com?subject=Invoice%20%24597%2Fmo%20%E2%80%94%20POD%20to%20Invoice&body=I%20want%20an%20invoice%20for%20the%20%24597%2Fmo%20retainer.%0AFleet%20%2F%20company%3A%0APhone%3A%0A">Request $597/mo invoice →</a>
       </div>
     </div>
 
-    <p class="who"><strong>For:</strong> 1–15 truck fleets / owner-ops who invoice brokers weekly and are drowning in photo PODs sitting in texts/email.<br>
-    <strong>Not for:</strong> enterprises needing EDI/TMS deep integrate, or fleets with zero digital POD habit yet.</p>
+    <p class="path">Also free on the hub: <a href="../">Fleet Business School</a> · <a href="../ifta/">IFTA calc</a> · <a href="../chat/">contractor after-hours bot</a></p>
 
-    <p class="note">Checkout links go live when Stripe/Gumroad payouts unlock. Until then: mailto demo with one sample POD (blur sensitive bits).<br>
-    <a class="back" href="../">← Fleet Business School hub</a> · <a class="back" href="../automation/">/automation alias</a></p>
+    <p class="note">Checkout links go live when Stripe/Gumroad payouts unlock. Until then: mailto with one sample POD (blur sensitive bits). Alias: <a class="back" href="../automation/">/automation</a> → this page.<br>
+    <a class="back" href="../">← Fleet Business School hub</a></p>
   </div>
 </body>
 </html>
