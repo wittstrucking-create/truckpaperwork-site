@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fleet Business School — tools & training for owner-operators</title>
+  <title>Fleet Business School — IFTA tools, contractor bot, POD→invoice</title>
+  <meta name="description" content="Free IFTA calculator, Quick Card, and deadlines for owner-operators. After-hours lead bot for Mitchell contractors. POD→invoice automation for 1–5 truck fleets." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
@@ -15,6 +16,7 @@
       --muted: #8b9aab;
       --accent: #e0a45a;
       --line: #2a3542;
+      --cta: #3d9cf0;
     }
     * { box-sizing: border-box; }
     body {
@@ -35,10 +37,52 @@
       margin: 0 0 0.5rem;
       line-height: 1.15;
     }
-    .tag { color: var(--muted); font-size: 1.1rem; max-width: 34em; margin: 0 0 2rem; line-height: 1.5; }
-    h2 { font-size: 1.15rem; margin: 2.25rem 0 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+    .tag { color: var(--muted); font-size: 1.1rem; max-width: 38em; margin: 0 0 1.75rem; line-height: 1.5; }
+    .paths {
+      display: grid;
+      gap: 0.65rem;
+      margin: 0 0 2.5rem;
+    }
+    @media (min-width: 720px) {
+      .paths { grid-template-columns: repeat(3, 1fr); }
+    }
+    a.path {
+      display: block;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(0,0,0,0.22);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    a.path:hover { border-color: var(--accent); transform: translateY(-1px); }
+    a.path .label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    a.path strong { display: block; font-size: 1rem; margin-bottom: 0.2rem; }
+    a.path span { color: var(--muted); font-size: 0.88rem; line-height: 1.35; }
+    h2 {
+      font-size: 1.05rem;
+      margin: 2.4rem 0 0.35rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .section-lead {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.45;
+      margin: 0 0 0.85rem;
+      max-width: 40em;
+    }
     .grid { display: grid; gap: 0.85rem; }
-    @media (min-width: 720px) { .grid.tools { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 720px) { .grid.tools { grid-template-columns: 1fr 1fr 1fr; } }
     a.card {
       display: block;
       padding: 1.1rem 1.15rem;
@@ -50,30 +94,85 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
     }
     a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    a.card.paid { border-color: #3a4a5c; }
+    a.card.paid:hover { border-color: var(--cta); }
     a.card strong { display: block; font-size: 1.05rem; margin-bottom: 0.25rem; }
+    a.card .price {
+      display: block;
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
     a.card span { color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+    .paid-grid { display: grid; gap: 0.85rem; }
+    @media (min-width: 720px) { .paid-grid { grid-template-columns: 1fr 1fr; } }
     ol.vids { margin: 0; padding-left: 1.2rem; color: var(--muted); line-height: 1.7; }
     ol.vids li { margin-bottom: 0.35rem; }
     .foot { margin-top: 3rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
     .yt { color: var(--accent); }
+    .soft-note {
+      margin: 0.5rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .soft-note a { color: var(--cta); }
   </style>
 </head>
 <body>
   <div class="wrap">
     <p class="brand">Fleet Business School</p>
-    <p class="tag">Compliance and fleet money math for owner-operators — IFTA, 2290, UCR, CSA — without the fluff. Free tools below. YouTube for the training.</p>
+    <p class="tag">Shop-floor paperwork tools — not another SaaS pitch deck. Free IFTA math for owner-ops. Paid after-hours bot for Mitchell contractors. POD→invoice for fleets that still email photos to brokers.</p>
 
-    <h2>Free tools</h2>
+    <nav class="paths" aria-label="Main paths">
+      <a class="path" href="#free-ifta">
+        <span class="label">Free</span>
+        <strong>IFTA tools</strong>
+        <span>Calc · Quick Card · deadlines</span>
+      </a>
+      <a class="path" href="chat/">
+        <span class="label">Paid · $149 + $499/mo</span>
+        <strong>Contractor chatbot</strong>
+        <span>After-hours leads (Mitchell / SD)</span>
+      </a>
+      <a class="path" href="n8n/">
+        <span class="label">Paid · $497 + $597/mo</span>
+        <strong>POD → Invoice</strong>
+        <span>Photo proof to broker PDF</span>
+      </a>
+    </nav>
+
+    <h2 id="free-ifta">Free IFTA tools</h2>
+    <p class="section-lead">Browser-only. No account. Illustrative rates until the official table loads — good enough to catch a bad MPG before you file.</p>
     <div class="grid tools">
-      <a class="card" href="ifta/"><strong>IFTA calculator</strong><span>Miles + fuel → estimated tax/credit. Placeholder rates until official table loads.</span></a>
-      <a class="card" href="ifta/quick-card/"><strong>IFTA Quick Card</strong><span>Free 1-page printable — miles/fuel blanks + quarterly due months. Not tax advice.</span></a>
+      <a class="card" href="ifta/"><strong>IFTA calculator</strong><span>Miles + fuel by jurisdiction → estimated tax or credit. Optional email→PDF mailto.</span></a>
+      <a class="card" href="ifta/quick-card/"><strong>IFTA Quick Card</strong><span>One-page printable: miles/fuel blanks + quarterly due months. Not tax advice.</span></a>
       <a class="card" href="deadlines/"><strong>Deadline tracker</strong><span>UCR, 2290, MCS-150, IFTA quarters — stays in your browser.</span></a>
-      <a class="card" href="chat/"><strong>AI chatbot for contractors</strong><span>$149 setup + $499/mo — after-hours lead capture (Mitchell/SD).</span></a>
-      <a class="card" href="n8n/"><strong>POD → Invoice (n8n)</strong><span>$497 setup + $597/mo — photo proof to broker PDF same day.</span></a>
+    </div>
+
+    <h2>For contractors</h2>
+    <p class="section-lead">Missed call after 5pm shouldn’t mean a lost HVAC/plumbing/roofing job. Live demo on the next page — try a fake after-hours lead before you email.</p>
+    <div class="paid-grid">
+      <a class="card paid" href="chat/">
+        <strong>After-hours lead chatbot</strong>
+        <span class="price">$149 setup + $499/mo · or $4,990/yr</span>
+        <span>Job type, address, photos → text to your phone. Built for Mitchell-area shops. Loom walkthrough on the demo page.</span>
+      </a>
+    </div>
+
+    <h2>For 1–5 truck fleets</h2>
+    <p class="section-lead">If you’re still photographing PODs and typing invoices the same night, this is the boring automation that pays for itself.</p>
+    <div class="paid-grid">
+      <a class="card paid" href="n8n/">
+        <strong>POD → Invoice (n8n)</strong>
+        <span class="price">$497 setup + $597/mo</span>
+        <span>Photo proof in → broker-ready PDF out, same day. What it does / who it’s for on the product page.</span>
+      </a>
     </div>
 
     <h2>YouTube</h2>
-    <p class="tag" style="margin-bottom:0.75rem"><a class="yt" href="https://www.youtube.com/@FleetBusinessSchool">@FleetBusinessSchool</a> · shop shorts stay on <a class="yt" href="https://www.youtube.com/@wittstrucking">@wittstrucking</a></p>
+    <p class="section-lead"><a class="yt" href="https://www.youtube.com/@FleetBusinessSchool">@FleetBusinessSchool</a> for compliance shorts. Shop floor stays on <a class="yt" href="https://www.youtube.com/@wittstrucking">@wittstrucking</a>.</p>
     <ol class="vids">
       <li><a class="yt" href="https://youtu.be/BpVW_HanzYs">IFTA for Owner-Operators in 10 Minutes (2026)</a></li>
       <li><a class="yt" href="https://youtu.be/O_5i48_SyXk">Form 2290 vs UCR — Stop Mixing Them Up</a></li>
@@ -87,14 +186,10 @@
       <li><a class="yt" href="https://youtu.be/WSpAa0b14YY">Free Tools Every 1–5 Truck Operation Should Use in 2026</a></li>
     </ol>
 
-    <h2>Digital downloads</h2>
-    <div class="grid">
-      <a class="card" href="#01-compliance-checklist.md"><strong>2026 Compliance checklist</strong><span>$17 checklist — Gumroad draft pending payout unlock</span></a>
-      <a class="card" href="#02-ifta-log-guide.md"><strong>IFTA log guide + CSV</strong><span>$9 target</span></a>
-      <a class="card" href="#03-broker-packet.md"><strong>Broker packet checklist</strong><span>$12 target</span></a>
-    </div>
+    <h2>Coming when payouts unlock</h2>
+    <p class="soft-note">$17 compliance checklist (Gumroad) is drafted — Stripe payouts still paused on our side. Want a heads-up when it’s live? <a href="mailto:hello@truckpaperwork.com?subject=Compliance%20checklist%20interest%20(%2417)&body=I%20want%20a%20heads-up%20when%20the%20%2417%20IFTA%20%2F%20compliance%20checklist%20is%20available.%0A%0AEmail%3A%0ABase%20state%3A%0AFleet%20size%20(trucks)%3A%0A">Email interest →</a> Until then, use the free Quick Card above.</p>
 
-    <p class="foot">Content by engineering from Bob 2 handoffs. Not legal or tax advice.</p>
+    <p class="foot">Built from a Dimock shop floor — not a growth agency. Not legal or tax advice. <a class="yt" href="mailto:hello@truckpaperwork.com">hello@truckpaperwork.com</a></p>
   </div>
 </body>
 </html>
