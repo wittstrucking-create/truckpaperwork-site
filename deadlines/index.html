@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fleet Compliance Deadlines — Free Tracker</title>
+  <style>
+    :root { --bg:#0e1114; --card:#171c21; --ink:#e8eef2; --muted:#8a96a0; --accent:#3d9cf0; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: "IBM Plex Sans", system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+    main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.75rem; margin: 0 0 0.35rem; letter-spacing: -0.02em; }
+    .muted { color: var(--muted); font-size: 0.95rem; line-height: 1.45; }
+    label { display:block; margin-top:1rem; font-size:0.85rem; color: var(--muted); }
+    input, select, button { width:100%; padding:0.65rem 0.75rem; margin-top:0.3rem; font-size:1rem; border-radius:6px; border:1px solid #2a333c; background:#0a0d10; color:var(--ink); }
+    button { background: var(--accent); border:0; color:#041018; font-weight:700; cursor:pointer; margin-top:1.25rem; }
+    table { width:100%; border-collapse: collapse; margin-top:1.5rem; font-size:0.95rem; }
+    th, td { text-align:left; padding:0.65rem 0.4rem; border-bottom:1px solid #24303a; }
+    th { color: var(--muted); font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; }
+    .soon { color:#f0b43d; }
+    .over { color:#f06a6a; }
+    .ok { color:#6ad4a0; }
+    .note { margin-top:1.5rem; padding:1rem; background:var(--card); border-radius:8px; font-size:0.85rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Compliance deadline tracker</h1>
+    <p class="muted">Owner-operator reminders for UCR, Form 2290, MCS-150, and IFTA filing windows. Data stays in your browser. Not legal advice.</p>
+
+    <label>Base state (for IFTA calendar)
+      <select id="baseState">
+        <option value="SD">South Dakota</option>
+        <option value="NE">Nebraska</option>
+        <option value="IA">Iowa</option>
+        <option value="MN">Minnesota</option>
+        <option value="ND">North Dakota</option>
+      </select>
+    </label>
+    <label>IFTA Q1 end (edit if your carrier calendar differs)
+      <input id="iftaQ1" type="date" value="2026-04-30" />
+    </label>
+    <label>Email for future alerts (saved locally only)
+      <input id="email" type="email" placeholder="you@example.com" />
+    </label>
+    <button id="save">Save &amp; refresh</button>
+
+    <table>
+      <thead><tr><th>Item</th><th>Due</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div class="note">
+      SMS/email alerts need Twilio/SendGrid (approval A3 — deferred). Until then this page is a free local tracker.
+      Paid SaaS target: $9.99/mo owner-op · $15/truck small fleet.
+    </div>
+  </main>
+  <script>
+    const KEY = 'fleet-deadlines-v1';
+    const defaults = () => ({
+      baseState: 'SD',
+      email: '',
+      iftaQ1: '2026-04-30',
+      items: [
+        { id: 'ucr', name: 'UCR (Unified Carrier Registration)', due: '2026-12-31' },
+        { id: '2290', name: 'IRS Form 2290 (HVUT)', due: '2026-08-31' },
+        { id: 'mcs150', name: 'MCS-150 biennial update', due: '2026-06-30' },
+        { id: 'ifta-q1', name: 'IFTA Q1 return', due: '2026-04-30' },
+        { id: 'ifta-q2', name: 'IFTA Q2 return', due: '2026-07-31' },
+        { id: 'ifta-q3', name: 'IFTA Q3 return', due: '2026-10-31' },
+        { id: 'ifta-q4', name: 'IFTA Q4 return', due: '2027-01-31' },
+      ],
+    });
+
+    function load() {
+      try { return { ...defaults(), ...JSON.parse(localStorage.getItem(KEY) || '{}') }; }
+      catch { return defaults(); }
+    }
+    function save(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
+
+    function statusFor(due) {
+      const d = new Date(due + 'T12:00:00');
+      const now = new Date();
+      const days = Math.ceil((d - now) / 86400000);
+      if (days < 0) return { cls: 'over', text: `${-days}d overdue` };
+      if (days <= 30) return { cls: 'soon', text: `${days}d left` };
+      return { cls: 'ok', text: `${days}d left` };
+    }
+
+    function render() {
+      const s = load();
+      document.getElementById('baseState').value = s.baseState || 'SD';
+      document.getElementById('email').value = s.email || '';
+      document.getElementById('iftaQ1').value = s.iftaQ1 || '2026-04-30';
+      // sync ifta q1 from field
+      const items = (s.items || defaults().items).map(it =>
+        it.id === 'ifta-q1' ? { ...it, due: s.iftaQ1 || it.due } : it
+      );
+      const tb = document.getElementById('rows');
+      tb.innerHTML = items.map(it => {
+        const st = statusFor(it.due);
+        return `<tr><td>${it.name}</td><td>${it.due}</td><td class="${st.cls}">${st.text}</td></tr>`;
+      }).join('');
+    }
+
+    document.getElementById('save').onclick = () => {
+      const s = load();
+      s.baseState = document.getElementById('baseState').value;
+      s.email = document.getElementById('email').value.trim();
+      s.iftaQ1 = document.getElementById('iftaQ1').value;
+      save(s);
+      render();
+    };
+    render();
+  </script>
+</body>
+</html>

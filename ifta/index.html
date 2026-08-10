@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free IFTA Calculator 2026</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; background:#111; color:#eee; }
+    h1 { font-size: 1.6rem; }
+    label { display:block; margin-top:0.75rem; font-size:0.9rem; color:#aaa; }
+    input, select, button { width:100%; padding:0.6rem; margin-top:0.25rem; font-size:1rem; }
+    button { background:#3d9cf0; border:0; color:#041018; font-weight:700; cursor:pointer; margin-top:1rem; }
+    #out { margin-top:1.25rem; padding:1rem; background:#1a1a1a; border-radius:6px; white-space:pre-wrap; }
+    .muted { color:#888; font-size:0.85rem; }
+  </style>
+</head>
+<body>
+  <h1>IFTA calculator (MVP)</h1>
+  <p class="muted">Sample rates — replace with official 2026 IFTA jurisdiction rates before production. Not tax advice.</p>
+  <label>State / jurisdiction
+    <select id="state">
+      <option value="SD">South Dakota</option>
+      <option value="NE">Nebraska</option>
+      <option value="IA">Iowa</option>
+      <option value="MN">Minnesota</option>
+      <option value="ND">North Dakota</option>
+    </select>
+  </label>
+  <label>Miles in jurisdiction <input id="miles" type="number" min="0" step="1" value="1000" /></label>
+  <label>Gallons purchased in jurisdiction <input id="gallons" type="number" min="0" step="0.1" value="150" /></label>
+  <button id="go">Calculate</button>
+  <div id="out"></div>
+  <script>
+    // PLACEHOLDER rates — engineering must load official IFTA table before charging users
+    const RATE = { SD: 0.28, NE: 0.297, IA: 0.30, MN: 0.285, ND: 0.23 };
+    const MPG_DEFAULT = 6.5;
+    document.getElementById('go').onclick = () => {
+      const st = document.getElementById('state').value;
+      const miles = +document.getElementById('miles').value;
+      const gal = +document.getElementById('gallons').value;
+      const rate = RATE[st] ?? 0.28;
+      const taxGal = miles / MPG_DEFAULT;
+      const owed = (taxGal - gal) * rate;
+      document.getElementById('out').textContent =
+        `Jurisdiction: ${st}\nAssumed MPG: ${MPG_DEFAULT}\nTaxable gallons: ${taxGal.toFixed(2)}\nNet gallons: ${(taxGal-gal).toFixed(2)}\nEst. tax ${owed>=0?'owed':'credit'}: $${Math.abs(owed).toFixed(2)}\n\n⚠ Placeholder rates — verify against official IFTA before any paid launch.`;
+    };
+  </script>
+</body>
+</html>

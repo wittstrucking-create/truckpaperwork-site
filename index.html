@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fleet Business School — tools & training for owner-operators</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #0c1014;
+      --bg1: #151c24;
+      --ink: #e7eef4;
+      --muted: #8b9aab;
+      --accent: #e0a45a;
+      --line: #2a3542;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #243041 0%, transparent 55%),
+        radial-gradient(900px 400px at 90% 0%, #2a2218 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #0a0d11);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    .brand {
+      font-family: "Special Elite", cursive;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      letter-spacing: 0.02em;
+      margin: 0 0 0.5rem;
+      line-height: 1.15;
+    }
+    .tag { color: var(--muted); font-size: 1.1rem; max-width: 34em; margin: 0 0 2rem; line-height: 1.5; }
+    h2 { font-size: 1.15rem; margin: 2.25rem 0 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+    .grid { display: grid; gap: 0.85rem; }
+    @media (min-width: 720px) { .grid.tools { grid-template-columns: 1fr 1fr; } }
+    a.card {
+      display: block;
+      padding: 1.1rem 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(0,0,0,0.25);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    a.card strong { display: block; font-size: 1.05rem; margin-bottom: 0.25rem; }
+    a.card span { color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+    ol.vids { margin: 0; padding-left: 1.2rem; color: var(--muted); line-height: 1.7; }
+    ol.vids li { margin-bottom: 0.35rem; }
+    .foot { margin-top: 3rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
+    .yt { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="brand">Fleet Business School</p>
+    <p class="tag">Compliance and fleet money math for owner-operators — IFTA, 2290, UCR, CSA — without the fluff. Free tools below. YouTube for the training.</p>
+
+    <h2>Free tools</h2>
+    <div class="grid tools">
+      <a class="card" href="ifta/"><strong>IFTA calculator</strong><span>Miles + fuel → estimated tax/credit. Placeholder rates until official table loads.</span></a>
+      <a class="card" href="deadlines/"><strong>Deadline tracker</strong><span>UCR, 2290, MCS-150, IFTA quarters — stays in your browser.</span></a>
+    </div>
+
+    <h2>YouTube</h2>
+    <p class="tag" style="margin-bottom:0.75rem"><a class="yt" href="https://www.youtube.com/@FleetBusinessSchool">@FleetBusinessSchool</a> · shop shorts stay on <a class="yt" href="https://www.youtube.com/@wittstrucking">@wittstrucking</a></p>
+    <ol class="vids">
+      <li>IFTA for Owner-Operators in 10 Minutes (2026)</li>
+      <li>Form 2290 vs UCR — Stop Mixing Them Up</li>
+      <li>Why Your CSA Score Suddenly Matters to Shippers</li>
+      <li>IFTA Quarterly Filing Checklist</li>
+      <li>What an Owner-Op Actually Needs from Software</li>
+    </ol>
+
+    <h2>Digital downloads (drafts)</h2>
+    <div class="grid">
+      <a class="card" href="#01-compliance-checklist.md"><strong>2026 Compliance checklist</strong><span>$19 target · full draft in repo</span></a>
+      <a class="card" href="#02-ifta-log-guide.md"><strong>IFTA log guide + CSV</strong><span>$9 target</span></a>
+      <a class="card" href="#03-broker-packet.md"><strong>Broker packet checklist</strong><span>$12 target</span></a>
+    </div>
+
+    <p class="foot">Content by engineering from Bob 2 handoffs. John only approves paid platform/domain spend. Not legal or tax advice.</p>
+  </div>
+</body>
+</html>
