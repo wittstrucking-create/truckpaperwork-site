@@ -3,58 +3,142 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fleet Compliance Deadlines — Free Tracker</title>
+  <title>Fleet Compliance Deadlines — Free Browser Tracker — Fleet Business School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
   <style>
-    :root { --bg:#0e1114; --card:#171c21; --ink:#e8eef2; --muted:#8a96a0; --accent:#3d9cf0; }
+    :root {
+      --bg0: #0c1014; --bg1: #151c24; --ink: #e7eef4; --muted: #8b9aab;
+      --accent: #e0a45a; --line: #2a3542; --cta: #3d9cf0;
+    }
     * { box-sizing: border-box; }
-    body { margin:0; font-family: "IBM Plex Sans", system-ui, sans-serif; background: var(--bg); color: var(--ink); }
-    main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-    h1 { font-size: 1.75rem; margin: 0 0 0.35rem; letter-spacing: -0.02em; }
-    .muted { color: var(--muted); font-size: 0.95rem; line-height: 1.45; }
-    label { display:block; margin-top:1rem; font-size:0.85rem; color: var(--muted); }
-    input, select, button { width:100%; padding:0.65rem 0.75rem; margin-top:0.3rem; font-size:1rem; border-radius:6px; border:1px solid #2a333c; background:#0a0d10; color:var(--ink); }
-    button { background: var(--accent); border:0; color:#041018; font-weight:700; cursor:pointer; margin-top:1.25rem; }
-    table { width:100%; border-collapse: collapse; margin-top:1.5rem; font-size:0.95rem; }
-    th, td { text-align:left; padding:0.65rem 0.4rem; border-bottom:1px solid #24303a; }
-    th { color: var(--muted); font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; }
-    .soon { color:#f0b43d; }
-    .over { color:#f06a6a; }
-    .ok { color:#6ad4a0; }
-    .note { margin-top:1.5rem; padding:1rem; background:var(--card); border-radius:8px; font-size:0.85rem; color:var(--muted); }
+    body {
+      margin: 0; font-family: "IBM Plex Sans", system-ui, sans-serif; color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 10% -10%, #243041 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 50%, #0a0d11);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    .brand { font-family: "Special Elite", cursive; color: var(--accent); margin: 0 0 1rem; }
+    h1 { font-size: clamp(1.55rem, 3.8vw, 2rem); line-height: 1.15; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); line-height: 1.5; margin: 0 0 0.75rem; font-size: 0.98rem; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0 0 1.35rem; }
+    .pill {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+      padding: 0.3rem 0.55rem; border-radius: 3px;
+      border: 1px solid var(--line); color: var(--muted); background: rgba(0,0,0,0.25);
+    }
+    .pill strong { color: var(--ink); font-weight: 700; }
+    label { display: block; margin-top: 0.85rem; font-size: 0.9rem; color: var(--muted); }
+    input, select, button {
+      width: 100%; padding: 0.7rem 0.75rem; margin-top: 0.3rem; font-size: 1rem;
+      border-radius: 3px; border: 1px solid var(--line); background: #0a0e12; color: var(--ink);
+      font-family: inherit;
+    }
+    button {
+      background: var(--cta); border: 0; color: #061018; font-weight: 700;
+      cursor: pointer; margin-top: 1.15rem;
+    }
+    .panel {
+      margin-top: 0.5rem; padding: 1.15rem 1.2rem 1.25rem;
+      background: rgba(0,0,0,0.35); border: 1px solid var(--line); border-radius: 3px;
+    }
+    h2 {
+      font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--accent); margin: 0 0 0.65rem;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 1.35rem; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 0.65rem 0.4rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .soon { color: #f0b43d; }
+    .over { color: #f06a6a; }
+    .ok { color: #6ad4a0; }
+    .note {
+      margin-top: 1.35rem; font-size: 0.85rem; color: var(--muted); line-height: 1.5;
+      border-top: 1px solid var(--line); padding-top: 0.95rem;
+    }
+    .tools {
+      margin-top: 1.25rem; padding: 1rem 1.1rem;
+      border: 1px solid var(--line); border-radius: 3px; background: rgba(0,0,0,0.25);
+      font-size: 0.92rem; line-height: 1.5; color: var(--muted);
+    }
+    .tools a { color: var(--accent); }
+    .cta-soft { margin-top: 0.85rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); }
+    .cta-soft a { color: var(--accent); }
+    .foot { margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .foot a { color: var(--accent); }
+    .row { display: grid; gap: 0.75rem; }
+    @media (min-width: 560px) { .row.two { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
-  <main>
+  <div class="wrap">
+    <p class="brand">Fleet Business School</p>
     <h1>Compliance deadline tracker</h1>
-    <p class="muted">Owner-operator reminders for UCR, Form 2290, MCS-150, and IFTA filing windows. Data stays in your browser. Not legal advice.</p>
+    <p class="sub">
+      One place to see UCR, Form 2290, MCS-150, and IFTA quarter windows for a 1–5 truck op.
+      Runs entirely in your browser — no account, no signup, nothing uploaded.
+    </p>
+    <div class="pill-row" aria-label="How this works">
+      <span class="pill"><strong>Free</strong> local tracker</span>
+      <span class="pill"><strong>Browser-only</strong> · localStorage</span>
+      <span class="pill"><strong>No account</strong></span>
+    </div>
 
-    <label>Base state (for IFTA calendar)
-      <select id="baseState">
-        <option value="SD">South Dakota</option>
-        <option value="NE">Nebraska</option>
-        <option value="IA">Iowa</option>
-        <option value="MN">Minnesota</option>
-        <option value="ND">North Dakota</option>
-      </select>
-    </label>
-    <label>IFTA Q1 end (edit if your carrier calendar differs)
-      <input id="iftaQ1" type="date" value="2026-04-30" />
-    </label>
-    <label>Email for future alerts (saved locally only)
-      <input id="email" type="email" placeholder="you@example.com" />
-    </label>
-    <button id="save">Save &amp; refresh</button>
+    <div class="panel">
+      <h2>Your calendar</h2>
+      <div class="row two">
+        <label>Base state (IFTA calendar context)
+          <select id="baseState">
+            <option value="SD">South Dakota</option>
+            <option value="NE">Nebraska</option>
+            <option value="IA">Iowa</option>
+            <option value="MN">Minnesota</option>
+            <option value="ND">North Dakota</option>
+          </select>
+        </label>
+        <label>IFTA Q1 end (edit if your carrier calendar differs)
+          <input id="iftaQ1" type="date" value="2026-04-30" />
+        </label>
+      </div>
+      <label>Optional note / email (saved on this device only)
+        <input id="email" type="email" placeholder="you@example.com — never sent from this page" autocomplete="email" />
+      </label>
+      <button id="save" type="button">Save &amp; refresh</button>
+    </div>
 
     <table>
       <thead><tr><th>Item</th><th>Due</th><th>Status</th></tr></thead>
       <tbody id="rows"></tbody>
     </table>
 
-    <div class="note">
-      SMS/email alerts need Twilio/SendGrid (approval A3 — deferred). Until then this page is a free local tracker.
-      Paid SaaS target: $9.99/mo owner-op · $15/truck small fleet.
+    <div class="tools">
+      Pair with free tools:
+      <a href="../ifta/">IFTA calculator</a>
+      ·
+      <a href="../ifta/quick-card/">IFTA Quick Card</a> (printable)
     </div>
-  </main>
+
+    <p class="cta-soft">
+      Want a heads-up when the full $17 compliance checklist is available to buy?
+      <a href="mailto:hello@truckpaperwork.com?subject=Compliance%20checklist%20interest%20(%2417)&body=I%20want%20a%20heads-up%20when%20the%20%2417%20IFTA%20%2F%20compliance%20checklist%20is%20available.%0A%0AEmail%3A%0ABase%20state%3A%0AFleet%20size%20(trucks)%3A%0A">Email interest →</a>
+      (Not for sale checkout yet — payouts still unlocking.)
+    </p>
+
+    <p class="note">
+      <strong style="color:inherit">Not legal or tax advice.</strong>
+      Dates are planning defaults — confirm with your base jurisdiction / IRS / FMCSA before filing.
+      SMS/email alerts later; this page stays a free local tracker until then.
+    </p>
+
+    <p class="foot">
+      <a href="../">Hub</a> ·
+      <a href="../ifta/">IFTA calculator</a> ·
+      <a href="../ifta/quick-card/">Quick Card</a>
+    </p>
+  </div>
   <script>
     const KEY = 'fleet-deadlines-v1';
     const defaults = () => ({
@@ -92,7 +176,6 @@
       document.getElementById('baseState').value = s.baseState || 'SD';
       document.getElementById('email').value = s.email || '';
       document.getElementById('iftaQ1').value = s.iftaQ1 || '2026-04-30';
-      // sync ifta q1 from field
       const items = (s.items || defaults().items).map(it =>
         it.id === 'ifta-q1' ? { ...it, due: s.iftaQ1 || it.due } : it
       );
