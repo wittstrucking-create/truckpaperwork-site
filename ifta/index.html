@@ -3,120 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Free IFTA Calculator 2026 — TruckPaperwork</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>Free IFTA Calculator 2026</title>
   <style>
-    :root {
-      --bg0: #0c1014; --bg1: #151c24; --ink: #e7eef4; --muted: #8b9aab;
-      --accent: #e0a45a; --line: #2a3542; --cta: #3d9cf0;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: "IBM Plex Sans", system-ui, sans-serif; color: var(--ink);
-      background: linear-gradient(180deg, var(--bg0), var(--bg1) 50%, #0a0d11);
-      min-height: 100vh;
-    }
-    .wrap { max-width: 640px; margin: 0 auto; padding: 2rem 1.15rem 3.5rem; }
-    h1 { font-size: clamp(1.6rem, 4vw, 2rem); margin: 0 0 0.5rem; }
-    .muted { color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
-    label { display:block; margin-top:0.85rem; font-size:0.88rem; color: var(--muted); }
-    input, select, button {
-      width:100%; padding:0.65rem 0.7rem; margin-top:0.3rem; font-size:1rem;
-      border: 1px solid var(--line); border-radius: 3px; background: #0a0e12; color: var(--ink);
-    }
-    button {
-      background: var(--cta); border:0; color:#041018; font-weight:700; cursor:pointer; margin-top:1rem;
-    }
-    button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-    button:disabled { opacity: 0.45; cursor: not-allowed; }
-    #out { margin-top:1.15rem; padding:1rem; background:#121820; border:1px solid var(--line); border-radius:4px; white-space:pre-wrap; display:none; }
-    .gate {
-      margin-top: 1.25rem; padding: 1rem; border: 1px solid var(--line); background: rgba(0,0,0,0.28);
-      display: none;
-    }
-    .gate h2 { font-size: 1rem; margin: 0 0 0.4rem; color: var(--accent); }
-    .gate p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.9rem; }
-    .pricing { margin-top: 1.5rem; font-size: 0.88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
-    a { color: var(--cta); }
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; background:#111; color:#eee; }
+    h1 { font-size: 1.6rem; }
+    label { display:block; margin-top:0.75rem; font-size:0.9rem; color:#aaa; }
+    input, select, button { width:100%; padding:0.6rem; margin-top:0.25rem; font-size:1rem; }
+    button { background:#3d9cf0; border:0; color:#041018; font-weight:700; cursor:pointer; margin-top:1rem; }
+    #out { margin-top:1.25rem; padding:1rem; background:#1a1a1a; border-radius:6px; white-space:pre-wrap; }
+    .muted { color:#888; font-size:0.85rem; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>IFTA calculator (free)</h1>
-    <p class="muted">Miles + fuel → estimated tax or credit. Sample rates until official 2026 IFTA table loads. Not tax advice.</p>
-    <label>State / jurisdiction
-      <select id="state">
-        <option value="SD">South Dakota</option>
-        <option value="NE">Nebraska</option>
-        <option value="IA">Iowa</option>
-        <option value="MN">Minnesota</option>
-        <option value="ND">North Dakota</option>
-      </select>
-    </label>
-    <label>Miles in jurisdiction <input id="miles" type="number" min="0" step="1" value="1000" /></label>
-    <label>Gallons purchased in jurisdiction <input id="gallons" type="number" min="0" step="0.1" value="150" /></label>
-    <button id="go">Calculate</button>
-    <div id="out"></div>
-
-    <div class="gate" id="gate">
-      <h2>Email for PDF summary</h2>
-      <p>Free calc stays free. Enter email to unlock a printable one-page PDF summary (freemium). History + alerts = $9.99/mo or $99/yr when live.</p>
-      <label>Email <input id="email" type="email" placeholder="you@example.com" autocomplete="email" /></label>
-      <button id="unlock" class="secondary">Send me the PDF summary</button>
-      <p class="muted" id="gateMsg" style="margin-top:0.75rem"></p>
-    </div>
-
-    <p class="pricing">
-      Free: calculator + email-gated PDF summary.<br />
-      Pro: <strong style="color:var(--accent)">$9.99/mo or $99/yr</strong> — history &amp; filing alerts · Fleet $29.<br />
-      <a href="../">← Fleet Business School hub</a>
-    </p>
-  </div>
+  <h1>IFTA calculator (MVP)</h1>
+  <p class="muted">Sample rates — replace with official 2026 IFTA jurisdiction rates before production. Not tax advice.</p>
+  <label>State / jurisdiction
+    <select id="state">
+      <option value="SD">South Dakota</option>
+      <option value="NE">Nebraska</option>
+      <option value="IA">Iowa</option>
+      <option value="MN">Minnesota</option>
+      <option value="ND">North Dakota</option>
+    </select>
+  </label>
+  <label>Miles in jurisdiction <input id="miles" type="number" min="0" step="1" value="1000" /></label>
+  <label>Gallons purchased in jurisdiction <input id="gallons" type="number" min="0" step="0.1" value="150" /></label>
+  <button id="go">Calculate</button>
+  <div id="out"></div>
   <script>
+    // PLACEHOLDER rates — engineering must load official IFTA table before charging users
     const RATE = { SD: 0.28, NE: 0.297, IA: 0.30, MN: 0.285, ND: 0.23 };
     const MPG_DEFAULT = 6.5;
-    const KEY = "tp_ifta_email";
-    let lastResult = null;
-
-    function hasEmail() {
-      try { return !!localStorage.getItem(KEY); } catch (e) { return false; }
-    }
-
-    document.getElementById("go").onclick = () => {
-      const st = document.getElementById("state").value;
-      const miles = +document.getElementById("miles").value;
-      const gal = +document.getElementById("gallons").value;
+    document.getElementById('go').onclick = () => {
+      const st = document.getElementById('state').value;
+      const miles = +document.getElementById('miles').value;
+      const gal = +document.getElementById('gallons').value;
       const rate = RATE[st] ?? 0.28;
       const taxGal = miles / MPG_DEFAULT;
       const owed = (taxGal - gal) * rate;
-      lastResult = { st, miles, gal, rate, taxGal, owed, at: new Date().toISOString() };
-      const out = document.getElementById("out");
-      out.style.display = "block";
-      out.textContent =
-        `Jurisdiction: ${st}\nAssumed MPG: ${MPG_DEFAULT}\nTaxable gallons: ${taxGal.toFixed(2)}\nNet gallons: ${(taxGal - gal).toFixed(2)}\nEst. tax ${owed >= 0 ? "owed" : "credit"}: $${Math.abs(owed).toFixed(2)}\n\n⚠ Placeholder rates — verify against official IFTA before filing.`;
-      document.getElementById("gate").style.display = "block";
-      if (hasEmail()) {
-        document.getElementById("gateMsg").textContent = "Email on file — PDF endpoint wires next (Resend). Pro history/alerts still coming.";
-      }
-    };
-
-    document.getElementById("unlock").onclick = () => {
-      const email = (document.getElementById("email").value || "").trim();
-      const msg = document.getElementById("gateMsg");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        msg.textContent = "Enter a valid email.";
-        return;
-      }
-      try { localStorage.setItem(KEY, email); } catch (e) {}
-      // Scaffold only — no backend yet. Payload ready for Resend/Formspree.
-      const payload = { email, product: "ifta-pdf-summary", result: lastResult, ts: Date.now() };
-      console.info("IFTA email-gate capture (scaffold)", payload);
-      window.__IFTA_LEAD__ = payload;
-      msg.textContent = "Saved locally. PDF email delivery + list sync wires when Resend/Formspree is connected. Pro: $9.99/mo history.";
-      document.getElementById("unlock").disabled = true;
-      document.getElementById("unlock").textContent = "Email captured";
+      document.getElementById('out').textContent =
+        `Jurisdiction: ${st}\nAssumed MPG: ${MPG_DEFAULT}\nTaxable gallons: ${taxGal.toFixed(2)}\nNet gallons: ${(taxGal-gal).toFixed(2)}\nEst. tax ${owed>=0?'owed':'credit'}: $${Math.abs(owed).toFixed(2)}\n\n⚠ Placeholder rates — verify against official IFTA before any paid launch.`;
     };
   </script>
 </body>

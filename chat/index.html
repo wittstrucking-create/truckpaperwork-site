@@ -29,20 +29,11 @@
     .price strong { color: var(--accent); }
     .alt { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.5rem; }
     ul { line-height: 1.7; color: var(--muted); padding-left: 1.15rem; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; align-items: center; }
     .cta {
-      display: inline-block; padding: 0.9rem 1.35rem;
+      display: inline-block; margin-top: 1.5rem; padding: 0.9rem 1.35rem;
       background: var(--cta); color: #061018; text-decoration: none; font-weight: 700; border-radius: 3px;
     }
-    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-    .cta.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
-    .plans { margin-top: 2rem; display: grid; gap: 0.75rem; }
-    .plan {
-      border: 1px solid var(--line); padding: 1rem 1.1rem; background: rgba(0,0,0,0.22);
-    }
-    .plan strong { display: block; margin-bottom: 0.25rem; }
-    .plan span { color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
-    .plan a { color: var(--cta); font-weight: 600; font-size: 0.92rem; }
+    .cta.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-left: 0.5rem; }
     .note { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1rem; }
     a.back { color: var(--muted); font-size: 0.9rem; }
   </style>
@@ -60,62 +51,23 @@
       <li>Lead to your phone/email — you close, bot qualifies</li>
       <li>Local owner stack (Dimock Iron Works)</li>
     </ul>
-    <div class="cta-row">
-      <a class="cta" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request demo</a>
-      <a class="cta secondary" href="#live-demo" id="try-demo">Try live demo</a>
-      <a class="cta secondary" id="stripe-setup" href="#stripe-pending">Pay $149 setup</a>
-      <a class="cta ghost" href="../">Fleet tools</a>
-    </div>
-    <div class="plans">
-      <div class="plan">
-        <strong>Monthly — $499/mo</strong>
-        <span>After setup. Stripe Payment Link wires when account verifies.</span><br />
-        <a id="stripe-monthly" href="#stripe-pending">Stripe link (pending bank verify)</a>
-      </div>
-      <div class="plan">
-        <strong>Annual — $4,990/yr</strong>
-        <span>Prepaid alternate. Same product, one invoice.</span><br />
-        <a id="stripe-annual" href="#stripe-pending">Stripe link (pending bank verify)</a>
-      </div>
-    </div>
-    <p class="note" id="stripe-pending">Live ConvoCore trial widget below (Mitchell Contractor Lead Bot · agent <code>0EQZvrFEqDQDvw8Qc2JX</code>). Stripe Payment Links: swap <code>#stripe-pending</code> for <code>buy.stripe.com/…</code> after bank/ID. Demo email stays live.</p>
+    <a class="cta" href="#demo">Try the live demo →</a>
+    <a class="cta secondary" href="mailto:hello@truckpaperwork.com?subject=Contractor%20chatbot%20demo">Request setup</a>
+    <p class="note" id="demo">Live demo widget (bottom-right): Mitchell contractor after-hours lead bot. Ask it to take a job. Stripe Payment Links next.</p>
     <p class="note"><a class="back" href="../">← Fleet Business School hub</a></p>
   </div>
-  <script>
-    // Swap these when Stripe Payment Links exist (no secrets in HTML).
-    window.STRIPE_LINKS = {
-      setup: null,    // e.g. "https://buy.stripe.com/..."
-      monthly: null,
-      annual: null
-    };
-    (function applyStripe() {
-      const map = [
-        ["stripe-setup", "setup"],
-        ["stripe-monthly", "monthly"],
-        ["stripe-annual", "annual"]
-      ];
-      for (const [id, key] of map) {
-        const url = window.STRIPE_LINKS[key];
-        const el = document.getElementById(id);
-        if (el && url) el.setAttribute("href", url);
-      }
-    })();
-  </script>
-
-  <section id="live-demo" style="margin:2.5rem auto 0; max-width:720px; padding:0 1.25rem 3rem;">
-    <p style="font-family:IBM Plex Sans,system-ui,sans-serif;color:#8b9aab;font-size:0.9rem;margin:0 0 0.75rem;">Live demo — after-hours contractor lead capture (ConvoCore free trial)</p>
-  </section>
-  <div style="width:0;height:0;" id="VG_OVERLAY_CONTAINER"></div>
+  <div style="width:0;height:0" id="VG_OVERLAY_CONTAINER"></div>
   <script defer>
-    (function() {
+    (function () {
       window.VG_CONFIG = {
         ID: "0EQZvrFEqDQDvw8Qc2JX",
         region: "na",
         render: "bottom-right",
-        stylesheets: ["https://cdn.convocore.ai/vg_live_build/styles.css"]
+        stylesheets: ["https://vg-bunny-cdn.b-cdn.net/vg_live_build/styles.css"],
+        autostart: true
       };
       var s = document.createElement("script");
-      s.src = "https://cdn.convocore.ai/vg_live_build/vg_bundle.js";
+      s.src = "https://vg-bunny-cdn.b-cdn.net/vg_live_build/vg_bundle.js";
       s.defer = true;
       document.body.appendChild(s);
     })();
