@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Free IFTA Calculator 2026 — Fleet Business School</title>
+  <title>Free IFTA Calculator 2026 — Multi-State Quarterly — Fleet Business School</title>
+  <meta name="description" content="Free multi-jurisdiction IFTA calculator for owner-operators. Enter miles and fuel by state, get per-state tax/credit and net total. No signup required." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
@@ -11,6 +12,7 @@
     :root {
       --bg0: #0c1014; --bg1: #151c24; --ink: #e7eef4; --muted: #8b9aab;
       --accent: #e0a45a; --line: #2a3542; --cta: #3d9cf0;
+      --green: #4ade80; --red: #f87171;
     }
     * { box-sizing: border-box; }
     body {
@@ -20,142 +22,396 @@
         linear-gradient(180deg, var(--bg0), var(--bg1) 50%, #0a0d11);
       min-height: 100vh;
     }
-    .wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
-    .brand { font-family: "Special Elite", cursive; color: var(--accent); margin: 0 0 1rem; }
-    h1 { font-size: clamp(1.7rem, 4vw, 2.2rem); line-height: 1.15; margin: 0 0 0.6rem; }
-    .sub { color: var(--muted); line-height: 1.5; margin: 0 0 1.5rem; }
-    label { display: block; margin-top: 0.85rem; font-size: 0.9rem; color: var(--muted); }
-    input, select, button {
-      width: 100%; padding: 0.7rem 0.75rem; margin-top: 0.3rem; font-size: 1rem;
+    .wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .brand { font-family: "Special Elite", cursive; color: var(--accent); margin: 0 0 0.75rem; }
+    h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.15; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); line-height: 1.5; margin: 0 0 1.25rem; font-size: 0.95rem; }
+    
+    .section { margin-bottom: 1.5rem; }
+    .section-head {
+      font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--accent); margin: 0 0 0.65rem; font-weight: 600;
+    }
+    
+    .entry-table { width: 100%; border-collapse: collapse; }
+    .entry-table th {
+      text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--muted); padding: 0.4rem 0.35rem; border-bottom: 1px solid var(--line);
+    }
+    .entry-table td { padding: 0.35rem 0.35rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    .entry-table select, .entry-table input {
+      width: 100%; padding: 0.5rem 0.55rem; font-size: 0.95rem;
       border-radius: 3px; border: 1px solid var(--line); background: #0a0e12; color: var(--ink);
       font-family: inherit;
     }
-    button {
-      background: var(--cta); border: 0; color: #061018; font-weight: 700;
-      cursor: pointer; margin-top: 1.15rem;
+    .entry-table input[type="number"] { text-align: right; }
+    .entry-table .col-state { width: 90px; }
+    .entry-table .col-miles { width: 110px; }
+    .entry-table .col-gal { width: 110px; }
+    .entry-table .col-del { width: 44px; text-align: center; }
+    .del-btn {
+      background: transparent; border: 1px solid var(--line); color: var(--muted);
+      width: 32px; height: 32px; border-radius: 3px; cursor: pointer; font-size: 1.1rem; line-height: 1;
     }
-    button.secondary {
-      background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-top: 0.6rem;
+    .del-btn:hover { border-color: var(--red); color: var(--red); }
+    
+    .add-row {
+      margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;
     }
-    #out {
-      margin-top: 1.25rem; padding: 1rem 1.1rem; background: rgba(0,0,0,0.35);
-      border: 1px solid var(--line); border-radius: 3px; white-space: pre-wrap; line-height: 1.45;
+    .add-btn, .calc-btn {
+      padding: 0.6rem 1rem; font-size: 0.92rem; font-weight: 600; border-radius: 3px;
+      border: 1px solid var(--line); cursor: pointer; font-family: inherit;
     }
-    .gate {
-      margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+    .add-btn { background: transparent; color: var(--accent); border-color: var(--accent); }
+    .add-btn:hover { background: rgba(224,164,90,0.1); }
+    .calc-btn { background: var(--cta); border: 0; color: #061018; }
+    .calc-btn:hover { background: #5aacf5; }
+    
+    .totals-box {
+      background: rgba(0,0,0,0.35); border: 1px solid var(--line); border-radius: 3px;
+      padding: 1rem 1.1rem; margin-top: 0.75rem;
     }
-    .gate p { color: var(--muted); font-size: 0.92rem; margin: 0 0 0.75rem; }
-    .note { margin-top: 2rem; font-size: 0.85rem; color: var(--muted); }
-    a { color: var(--accent); }
-    .row { display: grid; gap: 0.75rem; }
-    @media (min-width: 560px) { .row.two { grid-template-columns: 1fr 1fr; } }
+    .totals-row { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.95rem; }
+    .totals-row.head { border-bottom: 1px solid var(--line); margin-bottom: 0.35rem; color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .totals-row .val { font-weight: 600; }
+    .totals-row.mpg .val { color: var(--accent); }
+    
+    .results { margin-top: 1.5rem; }
+    .results-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    .results-table th {
+      text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--muted); padding: 0.5rem 0.4rem; border-bottom: 1px solid var(--line);
+    }
+    .results-table th.num { text-align: right; }
+    .results-table td { padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+    .results-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .results-table .owed { color: var(--red); }
+    .results-table .credit { color: var(--green); }
+    .results-table tfoot td { font-weight: 700; border-top: 2px solid var(--line); }
+    
+    .summary-box {
+      margin-top: 1rem; padding: 1rem 1.1rem;
+      background: rgba(0,0,0,0.4); border: 1px solid var(--line); border-radius: 3px;
+    }
+    .summary-box.owed { border-color: var(--red); }
+    .summary-box.credit { border-color: var(--green); }
+    .summary-big { font-size: 1.6rem; font-weight: 700; margin: 0 0 0.25rem; }
+    .summary-big.owed { color: var(--red); }
+    .summary-big.credit { color: var(--green); }
+    .summary-note { color: var(--muted); font-size: 0.88rem; margin: 0; }
+    
+    .gate { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+    .gate p { color: var(--muted); font-size: 0.92rem; margin: 0 0 0.65rem; }
+    .gate label { display: block; margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+    .gate input {
+      width: 100%; max-width: 320px; padding: 0.6rem 0.7rem; margin-top: 0.25rem; font-size: 1rem;
+      border-radius: 3px; border: 1px solid var(--line); background: #0a0e12; color: var(--ink);
+      font-family: inherit;
+    }
+    .gate button {
+      margin-top: 0.65rem; padding: 0.65rem 1.1rem; font-size: 0.95rem; font-weight: 600;
+      background: transparent; color: var(--accent); border: 1px solid var(--accent);
+      border-radius: 3px; cursor: pointer; font-family: inherit;
+    }
+    .gate button:hover { background: rgba(224,164,90,0.1); }
+    .gate-msg { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+    
+    .note { margin-top: 2rem; font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+    .note a { color: var(--accent); }
+    
+    @media (max-width: 600px) {
+      .entry-table th, .entry-table td { padding: 0.3rem 0.2rem; }
+      .entry-table select, .entry-table input { padding: 0.45rem 0.4rem; font-size: 0.88rem; }
+      .results-table { font-size: 0.85rem; }
+      .results-table th, .results-table td { padding: 0.4rem 0.25rem; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <p class="brand">Fleet Business School</p>
-    <h1>Free IFTA calculator</h1>
-    <p class="sub">Miles + fuel → rough tax/credit sketch. Runs entirely in your browser — no account, no API key. Not tax advice.</p>
+    <h1>Free IFTA Calculator — 2026</h1>
+    <p class="sub">Enter every jurisdiction you ran through this quarter. Get per-state tax/credit and your net total. Runs in your browser — no account needed.</p>
 
-    <div class="row two">
-      <label>Jurisdiction
-        <select id="state"></select>
-      </label>
-      <label>Assumed MPG
-        <input id="mpg" type="number" min="3" max="15" step="0.1" value="6.5" />
-      </label>
+    <div class="section">
+      <p class="section-head">Miles &amp; Fuel by Jurisdiction</p>
+      <table class="entry-table" id="entry-table">
+        <thead>
+          <tr>
+            <th class="col-state">State</th>
+            <th class="col-miles">Miles</th>
+            <th class="col-gal">Gallons</th>
+            <th class="col-del"></th>
+          </tr>
+        </thead>
+        <tbody id="entries"></tbody>
+      </table>
+      <div class="add-row">
+        <button type="button" class="add-btn" id="add-btn">+ Add State</button>
+        <button type="button" class="calc-btn" id="calc-btn">Calculate IFTA</button>
+      </div>
     </div>
-    <div class="row two">
-      <label>Miles in jurisdiction
-        <input id="miles" type="number" min="0" step="1" value="1000" />
-      </label>
-      <label>Gallons bought there
-        <input id="gallons" type="number" min="0" step="0.1" value="150" />
-      </label>
+
+    <div class="totals-box" id="totals-box">
+      <div class="totals-row head"><span>Quarter totals</span><span></span></div>
+      <div class="totals-row"><span>Total miles</span><span class="val" id="tot-miles">—</span></div>
+      <div class="totals-row"><span>Total gallons purchased</span><span class="val" id="tot-gal">—</span></div>
+      <div class="totals-row mpg"><span>Fleet MPG</span><span class="val" id="tot-mpg">—</span></div>
     </div>
-    <button id="go" type="button">Calculate</button>
-    <div id="out">Enter miles and gallons, then calculate.</div>
+
+    <div class="results" id="results" style="display:none">
+      <p class="section-head">Per-Jurisdiction Breakdown</p>
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th class="num">Miles</th>
+            <th class="num">Rate</th>
+            <th class="num">Taxable Gal</th>
+            <th class="num">Purchased</th>
+            <th class="num">Net Gal</th>
+            <th class="num">Tax / Credit</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+        <tfoot id="results-foot"></tfoot>
+      </table>
+      <div class="summary-box" id="summary-box">
+        <p class="summary-big" id="summary-amt">—</p>
+        <p class="summary-note" id="summary-note">Estimated net for this quarter</p>
+      </div>
+    </div>
 
     <div class="gate" id="email-gate">
-      <p><strong style="color:var(--ink)">Email for a 1-page PDF summary</strong> (optional — calc works without it)</p>
+      <p><strong style="color:var(--ink)">Save your results?</strong> Email yourself a summary (optional — calculator works without it)</p>
       <label>Email
         <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
       </label>
-      <button class="secondary" id="pdf-btn" type="button">Email me the PDF summary →</button>
-      <p class="note" id="gate-msg" style="margin-top:0.6rem"></p>
+      <button type="button" id="email-btn">Email me a summary →</button>
+      <p class="gate-msg" id="gate-msg"></p>
     </div>
 
     <p class="note">
-      Placeholder illustrative rates for Day-1 free tier — verify against your official IFTA table before filing.
+      <strong>⚠ Illustrative rates for planning only.</strong> These are approximate 2024–2025 rates. Verify against the official <a href="https://www.iftach.org/" target="_blank" rel="noopener">IFTA rate table</a> before filing. This tool is not tax advice.<br><br>
       <a href="quick-card/">Free IFTA Quick Card</a> (printable) ·
       <a href="../deadlines/">Deadline tracker</a> ·
       <a href="../">Hub</a> ·
       <a href="https://youtu.be/ccW6VX8vE4c">IFTA video</a>
     </p>
   </div>
+
   <script>
-    // Static illustrative rates only — Day-1 free tier. NO paid API / ToS-gated feeds.
-    // Update from official IFTA jurisdiction table when ready; do not block ship on keys.
+    // Approximate rates — update from official IFTA table; not a gated API
     const RATE = {
-      AL:0.27,AK:0.08,AZ:0.26,AR:0.245,CA:0.573,CO:0.2225,CT:0.40,DE:0.22,
-      FL:0.3434,GA:0.321,ID:0.32,IL:0.454,IN:0.54,IA:0.325,KS:0.26,KY:0.246,
-      LA:0.20,ME:0.312,MD:0.3655,MA:0.24,MI:0.295,MN:0.285,MS:0.18,MO:0.17,
-      MT:0.2975,NE:0.297,NV:0.27,NH:0.222,NJ:0.413,NM:0.21,NY:0.3925,NC:0.401,
-      ND:0.23,OH:0.38,OK:0.19,OR:0.00,PA:0.741,RI:0.35,SC:0.28,SD:0.28,
-      TN:0.27,TX:0.20,UT:0.315,VT:0.32,VA:0.274,WA:0.494,WV:0.357,WI:0.329,WY:0.24,DC:0.235
+      AL:0.29,AK:0.0895,AZ:0.26,AR:0.285,CA:0.706,CO:0.2295,CT:0.449,DE:0.22,
+      FL:0.35,GA:0.373,HI:0.17,ID:0.32,IL:0.667,IN:0.62,IA:0.325,KS:0.26,KY:0.286,
+      LA:0.20,ME:0.312,MD:0.417,MA:0.24,MI:0.33,MN:0.285,MS:0.18,MO:0.195,
+      MT:0.3325,NE:0.297,NV:0.27,NH:0.222,NJ:0.487,NM:0.21,NY:0.4059,NC:0.401,
+      ND:0.23,OH:0.47,OK:0.20,OR:0.40,PA:0.801,RI:0.37,SC:0.28,SD:0.28,
+      TN:0.27,TX:0.20,UT:0.365,VT:0.328,VA:0.302,WA:0.494,WV:0.357,WI:0.329,WY:0.24,DC:0.28
     };
-    const sel = document.getElementById('state');
-    Object.keys(RATE).sort().forEach((k) => {
-      const o = document.createElement('option');
-      o.value = k; o.textContent = k;
-      if (k === 'SD') o.selected = true;
-      sel.appendChild(o);
-    });
+    const STATES = Object.keys(RATE).sort();
 
-    function calc() {
-      const st = sel.value;
-      const miles = +document.getElementById('miles').value || 0;
-      const gal = +document.getElementById('gallons').value || 0;
-      const mpg = Math.max(3, +document.getElementById('mpg').value || 6.5);
-      const rate = RATE[st] ?? 0.28;
-      const taxGal = miles / mpg;
-      const net = taxGal - gal;
-      const owed = net * rate;
-      const dir = owed >= 0 ? 'owed' : 'credit';
-      document.getElementById('out').textContent =
-        `Jurisdiction: ${st}\nAssumed MPG: ${mpg}\nIllustrative rate: $${rate.toFixed(4)}/gal\n` +
-        `Taxable gallons: ${taxGal.toFixed(2)}\nNet gallons: ${net.toFixed(2)}\n` +
-        `Est. tax ${dir}: $${Math.abs(owed).toFixed(2)}\n\n` +
-        `⚠ Illustrative rates for planning only — not an official IFTA return.`;
-      try {
-        localStorage.setItem('ifta_last', JSON.stringify({ st, miles, gal, mpg, owed, at: Date.now() }));
-      } catch (_) {}
-      return { st, miles, gal, mpg, owed, dir };
+    const entriesEl = document.getElementById('entries');
+    const resultsEl = document.getElementById('results');
+    const resultsBody = document.getElementById('results-body');
+    const resultsFoot = document.getElementById('results-foot');
+    const summaryBox = document.getElementById('summary-box');
+    const summaryAmt = document.getElementById('summary-amt');
+    const summaryNote = document.getElementById('summary-note');
+
+    let rowId = 0;
+    const rows = [];
+
+    function makeStateSelect(selected) {
+      const sel = document.createElement('select');
+      sel.innerHTML = '<option value="">—</option>' + STATES.map(s =>
+        `<option value="${s}"${s === selected ? ' selected' : ''}>${s}</option>`
+      ).join('');
+      return sel;
     }
-    document.getElementById('go').onclick = calc;
 
-    document.getElementById('pdf-btn').onclick = () => {
+    function addRow(st = '', miles = '', gal = '') {
+      const id = rowId++;
+      const tr = document.createElement('tr');
+      tr.dataset.id = id;
+      
+      const tdState = document.createElement('td');
+      tdState.className = 'col-state';
+      const selState = makeStateSelect(st);
+      selState.name = 'state';
+      tdState.appendChild(selState);
+      
+      const tdMiles = document.createElement('td');
+      tdMiles.className = 'col-miles';
+      const inMiles = document.createElement('input');
+      inMiles.type = 'number'; inMiles.name = 'miles'; inMiles.min = 0; inMiles.step = 1;
+      inMiles.value = miles; inMiles.placeholder = '0';
+      tdMiles.appendChild(inMiles);
+      
+      const tdGal = document.createElement('td');
+      tdGal.className = 'col-gal';
+      const inGal = document.createElement('input');
+      inGal.type = 'number'; inGal.name = 'gal'; inGal.min = 0; inGal.step = 0.1;
+      inGal.value = gal; inGal.placeholder = '0';
+      tdGal.appendChild(inGal);
+      
+      const tdDel = document.createElement('td');
+      tdDel.className = 'col-del';
+      const btnDel = document.createElement('button');
+      btnDel.type = 'button'; btnDel.className = 'del-btn'; btnDel.textContent = '×';
+      btnDel.onclick = () => removeRow(id);
+      tdDel.appendChild(btnDel);
+      
+      tr.appendChild(tdState);
+      tr.appendChild(tdMiles);
+      tr.appendChild(tdGal);
+      tr.appendChild(tdDel);
+      entriesEl.appendChild(tr);
+      rows.push({ id, tr });
+      updateTotals();
+    }
+
+    function removeRow(id) {
+      const idx = rows.findIndex(r => r.id === id);
+      if (idx >= 0) {
+        rows[idx].tr.remove();
+        rows.splice(idx, 1);
+        updateTotals();
+      }
+    }
+
+    function getEntries() {
+      return rows.map(r => {
+        const st = r.tr.querySelector('select[name="state"]').value;
+        const miles = parseFloat(r.tr.querySelector('input[name="miles"]').value) || 0;
+        const gal = parseFloat(r.tr.querySelector('input[name="gal"]').value) || 0;
+        return { st, miles, gal };
+      }).filter(e => e.st && (e.miles > 0 || e.gal > 0));
+    }
+
+    function updateTotals() {
+      const entries = getEntries();
+      const totMiles = entries.reduce((s, e) => s + e.miles, 0);
+      const totGal = entries.reduce((s, e) => s + e.gal, 0);
+      const mpg = totGal > 0 ? (totMiles / totGal) : 0;
+      
+      document.getElementById('tot-miles').textContent = totMiles.toLocaleString();
+      document.getElementById('tot-gal').textContent = totGal.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      document.getElementById('tot-mpg').textContent = mpg > 0 ? mpg.toFixed(2) : '—';
+    }
+
+    function calculate() {
+      const entries = getEntries();
+      if (entries.length === 0) {
+        alert('Add at least one state with miles or gallons.');
+        return;
+      }
+      
+      const totMiles = entries.reduce((s, e) => s + e.miles, 0);
+      const totGal = entries.reduce((s, e) => s + e.gal, 0);
+      const mpg = totGal > 0 ? (totMiles / totGal) : 6.5;
+      
+      updateTotals();
+      
+      let netTotal = 0;
+      resultsBody.innerHTML = '';
+      
+      entries.forEach(e => {
+        const rate = RATE[e.st] ?? 0.28;
+        const taxableGal = e.miles / mpg;
+        const netGal = taxableGal - e.gal;
+        const tax = netGal * rate;
+        netTotal += tax;
+        
+        const tr = document.createElement('tr');
+        const cls = tax >= 0 ? 'owed' : 'credit';
+        tr.innerHTML = `
+          <td>${e.st}</td>
+          <td class="num">${e.miles.toLocaleString()}</td>
+          <td class="num">$${rate.toFixed(4)}</td>
+          <td class="num">${taxableGal.toFixed(2)}</td>
+          <td class="num">${e.gal.toFixed(1)}</td>
+          <td class="num ${cls}">${netGal >= 0 ? '' : '('}${Math.abs(netGal).toFixed(2)}${netGal >= 0 ? '' : ')'}</td>
+          <td class="num ${cls}">${tax >= 0 ? '' : '('}$${Math.abs(tax).toFixed(2)}${tax >= 0 ? '' : ')'}</td>
+        `;
+        resultsBody.appendChild(tr);
+      });
+      
+      const netCls = netTotal >= 0 ? 'owed' : 'credit';
+      resultsFoot.innerHTML = `
+        <tr>
+          <td colspan="5">Net Total</td>
+          <td class="num"></td>
+          <td class="num ${netCls}">${netTotal >= 0 ? '' : '('}$${Math.abs(netTotal).toFixed(2)}${netTotal >= 0 ? '' : ')'}</td>
+        </tr>
+      `;
+      
+      summaryBox.className = 'summary-box ' + netCls;
+      summaryAmt.className = 'summary-big ' + netCls;
+      if (netTotal >= 0) {
+        summaryAmt.textContent = `$${netTotal.toFixed(2)} owed`;
+        summaryNote.textContent = 'Estimated tax due this quarter';
+      } else {
+        summaryAmt.textContent = `$${Math.abs(netTotal).toFixed(2)} credit`;
+        summaryNote.textContent = 'Estimated refund / credit this quarter';
+      }
+      
+      resultsEl.style.display = 'block';
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      try {
+        localStorage.setItem('ifta_calc', JSON.stringify({ entries, mpg, netTotal, at: Date.now() }));
+      } catch (_) {}
+      
+      return { entries, mpg, netTotal };
+    }
+
+    document.getElementById('add-btn').onclick = () => addRow();
+    document.getElementById('calc-btn').onclick = calculate;
+
+    document.getElementById('email-btn').onclick = () => {
       const email = (document.getElementById('email').value || '').trim();
       const msg = document.getElementById('gate-msg');
       if (!email || !email.includes('@')) {
-        msg.textContent = 'Enter a valid email to request the PDF summary.';
+        msg.textContent = 'Enter a valid email to get your summary.';
         return;
       }
-      const r = calc();
-      const subject = encodeURIComponent('IFTA calc PDF summary request');
+      
+      const r = calculate();
+      if (!r) return;
+      
+      const lines = r.entries.map(e => `${e.st}: ${e.miles} mi, ${e.gal} gal`).join('\n');
+      const dir = r.netTotal >= 0 ? 'owed' : 'credit';
+      const subject = encodeURIComponent('IFTA calculator summary request');
       const body = encodeURIComponent(
-        `Email: ${email}\nJurisdiction: ${r.st}\nMiles: ${r.miles}\nGallons: ${r.gal}\nMPG: ${r.mpg}\nEst: $${Math.abs(r.owed).toFixed(2)} ${r.dir}\n\nPlease send the 1-page IFTA Quick Card PDF.`
+        `Email: ${email}\n\nJurisdictions:\n${lines}\n\nFleet MPG: ${r.mpg.toFixed(2)}\nNet: $${Math.abs(r.netTotal).toFixed(2)} ${dir}\n\nPlease send the summary + IFTA Quick Card PDF.`
       );
+      
       try {
         const list = JSON.parse(localStorage.getItem('ifta_emails') || '[]');
-        list.push({ email, at: Date.now(), st: r.st });
+        list.push({ email, at: Date.now(), net: r.netTotal, states: r.entries.length });
         localStorage.setItem('ifta_emails', JSON.stringify(list.slice(-200)));
       } catch (_) {}
-      msg.textContent = 'Opening mail draft — we will send the Quick Card PDF. Calc result is saved in this browser.';
+      
+      msg.textContent = 'Opening mail draft — we\'ll send the summary. Results saved in this browser.';
       window.location.href = `mailto:hello@truckpaperwork.com?subject=${subject}&body=${body}`;
     };
 
-    calc();
+    // Restore from localStorage or start with 3 blank rows
+    try {
+      const saved = JSON.parse(localStorage.getItem('ifta_calc') || 'null');
+      if (saved && saved.entries && saved.entries.length > 0) {
+        saved.entries.forEach(e => addRow(e.st, e.miles, e.gal));
+      } else {
+        throw 0;
+      }
+    } catch (_) {
+      addRow('SD', '', '');
+      addRow('MN', '', '');
+      addRow('IA', '', '');
+    }
+    updateTotals();
   </script>
 </body>
 </html>
