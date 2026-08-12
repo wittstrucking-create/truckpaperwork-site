@@ -28,11 +28,17 @@
       padding: 1.15rem 1.2rem 1.35rem;
       background: rgba(0,0,0,0.35); border: 1px solid var(--line); border-radius: 3px;
     }
-    a.cta {
+    a.cta, button.cta {
       display: block; text-align: center; text-decoration: none;
       width: 100%; padding: 0.85rem 0.75rem; margin-top: 0.35rem; font-size: 1rem;
       border-radius: 3px; background: var(--cta); color: #061018; font-weight: 700;
+      border: 0; cursor: pointer; font-family: inherit;
     }
+    .gate-form input[type="email"] {
+      width: 100%; padding: 0.75rem 0.8rem; font-size: 1rem; font-family: inherit;
+      border-radius: 3px; border: 1px solid var(--line); background: #0a0f14; color: var(--ink);
+    }
+    .gate-form input[type="email"]::placeholder { color: #6b7a8c; }
     .list { margin: 1.5rem 0 0; padding: 0; list-style: none; color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
     .list li { margin: 0 0 0.75rem; }
     .list strong { color: var(--ink); font-weight: 600; }
@@ -49,7 +55,11 @@
     </p>
 
     <div class="panel" id="gate">
-      <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfNf7Rltrx7wNXq72WL1metvJTH5hMFp81lBpmOWTa1nChj5w/viewform" rel="noopener">Send the sheets</a>
+      <form class="gate-form" action="https://formspree.io/f/xpparlzq" method="POST">
+        <input type="email" name="email" required placeholder="Your email" autocomplete="email" />
+        <input type="hidden" name="_subject" value="Rescue Kit sheets request" />
+        <button class="cta" type="submit">Send the sheets</button>
+      </form>
     </div>
 
     <ul class="list">
